@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Layanan – Desa Tirtomulyo</title>
+  <link rel="stylesheet" href="dist/output.css" />
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+  <div id="nav"></div>
+  <main class="container-desa space-y-12 py-10">
+    <section>
+      <h1 class="h-section">Layanan Ambulans Desa</h1>
+      <p class="text-sm text-slate-500">Gratis untuk warga. Status diperbarui oleh petugas desa.</p>
+      <div id="ambulan" class="mt-5 grid gap-4 md:grid-cols-2"></div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-brand-900">Kontak Darurat</h2>
+      <div id="kontak" class="mt-4 grid gap-3 sm:grid-cols-2"></div>
+    </section>
+
+    <section class="card bg-brand-50">
+      <h2 class="text-xl font-bold text-brand-900">Info untuk Pengunjung</h2>
+      <ul class="mt-2 list-inside list-disc space-y-1 text-sm text-slate-600">
+        <li>Parkir tersedia di Lapangan Desa dan area Embung.</li>
+        <li>Pemandu wisata lokal dapat dipesan lewat halaman Produk Desa.</li>
+        <li>Pantau halaman Agenda untuk acara terbuka bagi umum.</li>
+      </ul>
+    </section>
+  </main>
+  <div id="footer"></div>
+  <script src="js/data.js"></script><script src="js/layout.js"></script>
+  <script>
+    renderLayout("layanan.html");
+    document.getElementById("ambulan").innerHTML = AMBULAN.map(ambulanCard).join("");
+    document.getElementById("kontak").innerHTML = KONTAK.map(k =>
+      `<a href="tel:${k.hp}" class="card flex items-center justify-between"><span class="font-semibold">${k.nama}</span><span class="text-brand-700">📞 ${k.hp}</span></a>`).join("");
+  </script>
+</body>
+</html>

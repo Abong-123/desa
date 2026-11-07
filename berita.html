@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Berita – Desa Tirtomulyo</title>
+  <link rel="stylesheet" href="dist/output.css" />
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+  <div id="nav"></div>
+  <main class="container-desa py-10">
+    <h1 class="h-section">Berita Desa</h1>
+    <p class="text-sm text-slate-500">Kabar terbaru dari Tirtomulyo.</p>
+    <div id="filter" class="mt-5 flex flex-wrap gap-2"></div>
+    <div id="list" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+  </main>
+  <div id="footer"></div>
+  <script src="js/data.js"></script><script src="js/layout.js"></script>
+  <script>
+    renderLayout("berita.html");
+    const kats = ["Semua", ...new Set(BERITA.map(b => b.kat))];
+    let aktif = "Semua";
+    function draw() {
+      document.getElementById("filter").innerHTML = kats.map(k =>
+        `<button data-k="${k}" class="rounded-full px-4 py-1.5 text-sm font-medium ${k === aktif ? "bg-brand-600 text-white" : "bg-white text-slate-600 border border-slate-200"}">${k}</button>`).join("");
+      document.getElementById("list").innerHTML = BERITA.filter(b => aktif === "Semua" || b.kat === aktif)
+        .sort((a, b) => b.tgl.localeCompare(a.tgl)).map(newsCard).join("");
+      document.querySelectorAll("[data-k]").forEach(btn => btn.onclick = () => { aktif = btn.dataset.k; draw(); });
+    }
+    draw();
+  </script>
+</body>
+</html>

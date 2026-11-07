@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desa Tirtomulyo – Beranda</title>
+  <link rel="stylesheet" href="dist/output.css" />
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+  <div id="nav"></div>
+
+  <section class="bg-gradient-to-br from-brand-700 to-brand-500 text-white">
+    <div class="container-desa py-16 md:py-24">
+      <p class="text-sm font-semibold uppercase tracking-widest text-brand-100">Selamat datang di</p>
+      <h1 class="mt-2 text-4xl font-extrabold md:text-5xl">Desa Tirtomulyo</h1>
+      <p class="mt-4 max-w-xl text-brand-50">Desa wisata di lereng pegunungan: nikmati embung, kebun kopi, dan budaya warga. Beli produk asli desa, pantau agenda, dan lihat transparansi dana desa.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="agenda.html" class="rounded-xl bg-white px-5 py-2.5 font-semibold text-brand-700 hover:bg-brand-50">Lihat Agenda</a>
+        <a href="produk.html" class="rounded-xl border border-white px-5 py-2.5 font-semibold hover:bg-white/10">Belanja Produk Desa</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container-desa space-y-14 py-12">
+    <div id="stats" class="-mt-20 grid grid-cols-2 gap-4 md:grid-cols-4"></div>
+
+    <section>
+      <div class="flex items-end justify-between"><div><h2 class="h-section">Agenda Terdekat</h2><p class="text-sm text-slate-500">Kegiatan warga & wisata yang bisa diikuti pengunjung.</p></div><a href="agenda.html" class="btn-outline">Semua</a></div>
+      <div id="agendaList" class="mt-5 grid gap-4 md:grid-cols-2"></div>
+    </section>
+
+    <section class="grid gap-6 md:grid-cols-3">
+      <div class="md:col-span-2">
+        <h2 class="h-section">Berita Terbaru</h2>
+        <div id="beritaList" class="mt-5 grid gap-4 sm:grid-cols-2"></div>
+      </div>
+      <div>
+        <h2 class="h-section">Ambulans Desa</h2>
+        <p class="text-sm text-slate-500">Ketersediaan saat ini.</p>
+        <div id="ambulanList" class="mt-5 space-y-4"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="flex items-end justify-between"><div><h2 class="h-section">Produk Unggulan Desa</h2><p class="text-sm text-slate-500">Dari petani, pengrajin, dan UMKM warga.</p></div><a href="produk.html" class="btn-outline">Toko</a></div>
+      <div id="produkList" class="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4"></div>
+    </section>
+
+    <section class="card bg-brand-50">
+      <h2 class="h-section">Transparansi Dana Desa {{tahun}}</h2>
+      <p id="ringkasDana" class="mt-2 text-slate-600"></p>
+      <a href="transparansi.html" class="btn mt-4">Lihat Laporan</a>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+  <script src="js/data.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    renderLayout("index.html");
+    const today = new Date().toISOString().slice(0, 10);
+    const stat = (v, l, e) => `<div class="card text-center"><div class="text-3xl">${e}</div><div class="text-2xl font-extrabold text-brand-700">${v}</div><div class="text-xs text-slate-500">${l}</div></div>`;
+    document.getElementById("stats").innerHTML =
+      stat(DESA.penduduk.toLocaleString("id-ID"), "Penduduk", "👥") + stat(DESA.kk.toLocaleString("id-ID"), "Kepala Keluarga", "🏠") +
+      stat(DESA.rt, "RT", "📍") + stat(DESA.wisatawan.toLocaleString("id-ID"), "Wisatawan / tahun", "🧳");
+    document.getElementById("agendaList").innerHTML = AGENDA.filter(a => a.tgl >= today).slice(0, 4).map(eventCard).join("");
+    document.getElementById("beritaList").innerHTML = BERITA.slice(0, 4).map(newsCard).join("");
+    document.getElementById("ambulanList").innerHTML = AMBULAN.map(ambulanCard).join("");
+    document.getElementById("produkList").innerHTML = PRODUK.slice(0, 4).map(p => productCard(p, false)).join("");
+    const tp = DANA.pendapatan.reduce((s, x) => s + x.nilai, 0);
+    const ta = DANA.belanja.reduce((s, x) => s + x.anggaran, 0);
+    const tr = DANA.belanja.reduce((s, x) => s + x.realisasi, 0);
+    document.querySelector("h2.h-section:not(:empty)"); // no-op
+    document.querySelectorAll("h2").forEach(h => h.innerHTML = h.innerHTML.replace("{{tahun}}", DANA.tahun));
+    document.getElementById("ringkasDana").innerHTML = `Pendapatan desa <b>${rupiah(tp)}</b>, anggaran belanja <b>${rupiah(ta)}</b>, terealisasi <b>${rupiah(tr)}</b> (${Math.round(tr / ta * 100)}%).`;
+  </script>
+</body>
+</html>
