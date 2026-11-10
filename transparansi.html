@@ -2,63 +2,38 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Transparansi – Desa Tirtomulyo</title>
+  <title>Transparansi Dana Desa – Desa Wisata Taman Sari</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="dist/output.css" />
 </head>
-<body class="bg-slate-50 font-sans text-slate-800">
-  <div id="nav"></div>
-  <main class="container-desa space-y-12 py-10">
-    <header>
-      <h1 class="h-section">Transparansi Dana Desa <span id="thn"></span></h1>
-      <p class="text-sm text-slate-500">Ringkasan pelaporan, bukan rincian transaksi.</p>
-    </header>
-
-    <section id="ringkas" class="grid gap-4 md:grid-cols-3"></section>
-
-    <section>
-      <h2 class="text-xl font-bold text-brand-900">Sumber Pendapatan</h2>
-      <div id="pendapatan" class="mt-4 grid gap-3 sm:grid-cols-2"></div>
-    </section>
-
-    <section>
-      <h2 class="text-xl font-bold text-brand-900">Realisasi Belanja per Bidang</h2>
-      <div id="belanja" class="card mt-4 space-y-5"></div>
-    </section>
-
-    <section>
-      <h2 class="text-xl font-bold text-brand-900">Kegiatan Utama & Progres</h2>
-      <div id="kegiatan" class="mt-4 grid gap-4 md:grid-cols-2"></div>
-    </section>
-
-    <section>
-      <h2 class="text-xl font-bold text-brand-900">Dokumen Laporan</h2>
-      <div id="laporan" class="mt-4 space-y-3"></div>
+<body>
+  <div id="nav"></div><div id="hero"></div>
+  <main class="wrap space-y-20 py-16">
+    <section id="ringkas" class="grid gap-5 md:grid-cols-3"></section>
+    <section><p class="eyebrow">Pendapatan</p><h2 class="h2">Dari mana dana desa berasal</h2><div id="pendapatan" class="mt-8 grid gap-4 sm:grid-cols-2"></div></section>
+    <section><p class="eyebrow">Belanja</p><h2 class="h2">Realisasi per bidang</h2><div id="belanja" class="card mt-8 space-y-6 p-7"></div></section>
+    <section><p class="eyebrow">Kegiatan</p><h2 class="h2">Progres kegiatan utama</h2><div id="kegiatan" class="mt-8 grid gap-5 md:grid-cols-2"></div></section>
+    <section class="grid gap-10 lg:grid-cols-2">
+      <div><p class="eyebrow">Dokumen</p><h2 class="h2">Laporan resmi</h2><div id="laporan" class="mt-8 space-y-3"></div></div>
+      <div class="card h-fit bg-forest-900 p-8 text-white"><h2 class="font-display text-2xl font-semibold">Sampaikan aspirasi</h2><p class="mt-3 text-sm text-white/75">Warga dapat menyampaikan usulan dan pertanyaan tentang anggaran melalui paruman desa atau WhatsApp kantor perbekel.</p><a href="https://wa.me/__WA__" id="wa" target="_blank" class="btn-gold mt-6">Kirim Aspirasi</a></div>
     </section>
   </main>
   <div id="footer"></div>
   <script src="js/data.js"></script><script src="js/layout.js"></script>
   <script>
-    renderLayout("transparansi.html");
-    document.getElementById("thn").textContent = DANA.tahun;
-    const tp = DANA.pendapatan.reduce((s, x) => s + x.nilai, 0);
-    const ta = DANA.belanja.reduce((s, x) => s + x.anggaran, 0);
-    const tr = DANA.belanja.reduce((s, x) => s + x.realisasi, 0);
-    const box = (l, v, e) => `<div class="card"><div class="text-2xl">${e}</div><p class="text-xs text-slate-500">${l}</p><p class="text-xl font-extrabold text-brand-700">${v}</p></div>`;
-    document.getElementById("ringkas").innerHTML =
-      box("Total Pendapatan", rupiah(tp), "💰") + box("Total Anggaran Belanja", rupiah(ta), "📋") + box("Terealisasi", `${rupiah(tr)} (${Math.round(tr / ta * 100)}%)`, "✅");
-    document.getElementById("pendapatan").innerHTML = DANA.pendapatan.map(x =>
-      `<div class="card flex items-center justify-between"><span class="text-sm">${x.sumber}</span><b class="text-brand-700">${rupiah(x.nilai)}</b></div>`).join("");
-    const bar = (pct, color = "bg-brand-500") => `<div class="h-3 w-full overflow-hidden rounded-full bg-slate-100"><div class="h-full ${color}" style="width:${pct}%"></div></div>`;
-    document.getElementById("belanja").innerHTML = DANA.belanja.map(b => {
-      const pct = Math.round(b.realisasi / b.anggaran * 100);
-      return `<div><div class="mb-1 flex flex-wrap justify-between gap-1 text-sm"><b>${b.bidang}</b><span class="text-slate-500">${rupiah(b.realisasi)} / ${rupiah(b.anggaran)} (${pct}%)</span></div>${bar(pct)}</div>`;
-    }).join("");
-    document.getElementById("kegiatan").innerHTML = DANA.kegiatan.map(k =>
-      `<div class="card"><span class="badge">${k.bidang}</span><h3 class="mt-2 font-bold">${k.nama}</h3><p class="text-sm text-slate-500">Nilai: ${rupiah(k.nilai)}</p>
-       <div class="mt-3">${bar(k.progres, k.progres === 100 ? "bg-green-500" : "bg-earth-500")}</div><p class="mt-1 text-right text-xs font-semibold">${k.progres}% selesai</p></div>`).join("");
-    document.getElementById("laporan").innerHTML = DANA.laporan.map(l =>
-      `<div class="card flex items-center justify-between"><div><p class="font-semibold">📄 ${l.judul}</p><p class="text-xs text-slate-500">${tgl(l.tgl)}</p></div>
-       <span class="flex items-center gap-3"><span class="badge ${l.status === "Draft" ? "!bg-amber-100 !text-amber-700" : ""}">${l.status}</span><a href="#" class="btn-outline" onclick="alert('Dummy: tautkan ke file PDF laporan');return false;">Unduh</a></span></div>`).join("");
+    renderLayout("transparansi.html", false);
+    pageHero("Transparansi Dana Desa " + DANA.tahun, "Ringkasan pelaporan terbuka untuk warga dan pengunjung. Bukan rincian transaksi.", "rumah_adat.jpg");
+    $("wa").href = `https://wa.me/${DESA.wa}?text=${encodeURIComponent("Halo perbekel, saya ingin menyampaikan aspirasi terkait dana desa.")}`;
+    const tp = DANA.pendapatan.reduce((s, x) => s + x.nilai, 0), ta = DANA.belanja.reduce((s, x) => s + x.anggaran, 0), tr = DANA.belanja.reduce((s, x) => s + x.realisasi, 0);
+    const box = (l, v, e) => `<div class="card reveal p-6"><div class="text-3xl">${e}</div><p class="mt-2 text-xs uppercase tracking-widest text-forest-900/50">${l}</p><p class="font-display text-2xl font-semibold text-forest-800">${v}</p></div>`;
+    $("ringkas").innerHTML = box("Total pendapatan", rupiah(tp), "💰") + box("Anggaran belanja", rupiah(ta), "📋") + box("Terealisasi", `${rupiah(tr)} · ${Math.round(tr / ta * 100)}%`, "✅");
+    $("pendapatan").innerHTML = DANA.pendapatan.map(x => `<div class="card reveal flex items-center justify-between p-5"><span class="text-sm">${x.sumber}</span><b class="text-gold-600">${rupiah(x.nilai)}</b></div>`).join("");
+    const bar = (p, c = "bg-forest-600") => `<div class="h-3 w-full overflow-hidden rounded-full bg-sand-100"><div class="h-full rounded-full ${c}" style="width:${p}%"></div></div>`;
+    $("belanja").innerHTML = DANA.belanja.map(b => { const p = Math.round(b.realisasi / b.anggaran * 100); return `<div><div class="mb-2 flex flex-wrap justify-between gap-1 text-sm"><b class="text-forest-900">${b.bidang}</b><span class="text-forest-900/60">${rupiah(b.realisasi)} / ${rupiah(b.anggaran)} (${p}%)</span></div>${bar(p)}</div>`; }).join("");
+    $("kegiatan").innerHTML = DANA.kegiatan.map(k => `<div class="card reveal p-6"><span class="badge">${k.bidang}</span><h3 class="mt-3 font-display text-lg font-semibold text-forest-900">${k.nama}</h3><p class="text-sm text-forest-900/60">Nilai: ${rupiah(k.nilai)}</p><div class="mt-4">${bar(k.progres, k.progres === 100 ? "bg-emerald-500" : "bg-gold-500")}</div><p class="mt-1 text-right text-xs font-semibold">${k.progres}% selesai</p></div>`).join("");
+    $("laporan").innerHTML = DANA.laporan.map(l => `<div class="card reveal flex items-center justify-between gap-3 p-5"><div><p class="font-semibold text-forest-900">📄 ${l.judul}</p><p class="text-xs text-forest-900/50">${tgl(l.tgl)}</p></div><span class="flex items-center gap-3"><span class="badge ${l.status === "Draft" ? "!bg-amber-100 !text-amber-800" : ""}">${l.status}</span><a href="#" onclick="alert('Dummy: tautkan ke file PDF');return false" class="btn-line !px-4 !py-2">Unduh</a></span></div>`).join("");
+    reveal();
   </script>
 </body>
 </html>

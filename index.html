@@ -1,78 +1,141 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Desa Tirtomulyo – Beranda</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desa Wisata Taman Sari – Bali</title>
+  <meta name="description" content="Desa wisata di Tabanan, Bali: sawah subak, budaya, produk lokal, dan keterbukaan informasi desa." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="dist/output.css" />
 </head>
-<body class="bg-slate-50 font-sans text-slate-800">
+<body>
   <div id="nav"></div>
 
-  <section class="bg-gradient-to-br from-brand-700 to-brand-500 text-white">
-    <div class="container-desa py-16 md:py-24">
-      <p class="text-sm font-semibold uppercase tracking-widest text-brand-100">Selamat datang di</p>
-      <h1 class="mt-2 text-4xl font-extrabold md:text-5xl">Desa Tirtomulyo</h1>
-      <p class="mt-4 max-w-xl text-brand-50">Desa wisata di lereng pegunungan: nikmati embung, kebun kopi, dan budaya warga. Beli produk asli desa, pantau agenda, dan lihat transparansi dana desa.</p>
-      <div class="mt-6 flex flex-wrap gap-3">
-        <a href="agenda.html" class="rounded-xl bg-white px-5 py-2.5 font-semibold text-brand-700 hover:bg-brand-50">Lihat Agenda</a>
-        <a href="produk.html" class="rounded-xl border border-white px-5 py-2.5 font-semibold hover:bg-white/10">Belanja Produk Desa</a>
-      </div>
+  <!-- HERO -->
+  <section class="relative flex min-h-screen items-center bg-forest-900 text-white">
+    <div class="absolute inset-0 overflow-hidden">
+      <img src="src/assets/img/sawah1.jpg" alt="Sawah terasering" class="h-full w-full object-cover" onerror="this.remove()" />
+      <div class="absolute inset-0 bg-gradient-to-r from-forest-900/90 via-forest-900/50 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-forest-900/80 via-transparent to-transparent"></div>
     </div>
+    <div class="wrap relative pt-24 pb-40">
+      <p class="eyebrow !text-gold-500">Kabupaten Tabanan · Bali</p>
+      <h1 class="max-w-3xl font-display text-5xl font-semibold leading-[1.05] md:text-7xl">Desa Wisata <span class="text-gold-500">Taman Sari</span></h1>
+      <p class="mt-6 max-w-xl text-lg text-white/85">Tempat sawah berundak, pura, dan seni hidup berdampingan. Kunjungi, belajar, dan bawa pulang karya warga desa.</p>
+      <div class="mt-9 flex flex-wrap gap-3"><a href="wisata.html" class="btn-gold">Jelajahi Wisata</a><a href="agenda.html" class="btn-wline">Agenda Desa</a></div>
+    </div>
+    <div class="absolute inset-x-0 bottom-0 z-10 translate-y-1/2"><div class="wrap"><div id="quick" class="grid gap-px overflow-hidden rounded-2xl bg-sand-200 shadow-2xl md:grid-cols-3"></div></div></div>
   </section>
 
-  <main class="container-desa space-y-14 py-12">
-    <div id="stats" class="-mt-20 grid grid-cols-2 gap-4 md:grid-cols-4"></div>
-
-    <section>
-      <div class="flex items-end justify-between"><div><h2 class="h-section">Agenda Terdekat</h2><p class="text-sm text-slate-500">Kegiatan warga & wisata yang bisa diikuti pengunjung.</p></div><a href="agenda.html" class="btn-outline">Semua</a></div>
-      <div id="agendaList" class="mt-5 grid gap-4 md:grid-cols-2"></div>
-    </section>
-
-    <section class="grid gap-6 md:grid-cols-3">
-      <div class="md:col-span-2">
-        <h2 class="h-section">Berita Terbaru</h2>
-        <div id="beritaList" class="mt-5 grid gap-4 sm:grid-cols-2"></div>
+  <main class="pt-32">
+    <!-- TENTANG -->
+    <section class="wrap grid items-center gap-14 py-16 lg:grid-cols-2">
+      <div class="reveal">
+        <p class="eyebrow">Tentang Desa</p>
+        <h2 class="h2">Desa yang menjaga tradisi dan menyambut dunia.</h2>
+        <p class="lead">Taman Sari dihuni lebih dari empat ribu warga dalam enam banjar dan tiga subak. Kehidupan sehari-hari kami berpusat pada sawah, pura, dan gotong royong. Kini warga membuka pintu bagi wisatawan lewat pariwisata berbasis masyarakat, dengan syarat satu: budaya dihormati.</p>
+        <div id="stats" class="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4"></div>
       </div>
-      <div>
-        <h2 class="h-section">Ambulans Desa</h2>
-        <p class="text-sm text-slate-500">Ketersediaan saat ini.</p>
-        <div id="ambulanList" class="mt-5 space-y-4"></div>
+      <div class="reveal relative h-[460px] md:h-[540px]">
+        <div class="absolute right-0 top-0 h-[75%] w-[78%] overflow-hidden rounded-3xl shadow-xl">__IMG1__</div>
+        <div class="absolute bottom-0 left-0 h-[55%] w-[55%] overflow-hidden rounded-3xl border-8 border-sand-50 shadow-xl">__IMG2__</div>
       </div>
     </section>
 
-    <section>
-      <div class="flex items-end justify-between"><div><h2 class="h-section">Produk Unggulan Desa</h2><p class="text-sm text-slate-500">Dari petani, pengrajin, dan UMKM warga.</p></div><a href="produk.html" class="btn-outline">Toko</a></div>
-      <div id="produkList" class="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4"></div>
+    <!-- WISATA BENTO -->
+    <section class="bg-white py-20">
+      <div class="wrap">
+        <div class="flex flex-wrap items-end justify-between gap-4"><div class="reveal"><p class="eyebrow">Destinasi</p><h2 class="h2">Wisata unggulan</h2></div><a href="wisata.html" class="btn-line">Semua destinasi</a></div>
+        <div id="bento" class="mt-10 grid auto-rows-[200px] grid-cols-2 gap-4 md:auto-rows-[230px] md:grid-cols-4"></div>
+      </div>
     </section>
 
-    <section class="card bg-brand-50">
-      <h2 class="h-section">Transparansi Dana Desa {{tahun}}</h2>
-      <p id="ringkasDana" class="mt-2 text-slate-600"></p>
-      <a href="transparansi.html" class="btn mt-4">Lihat Laporan</a>
+    <!-- BUDAYA -->
+    <section class="py-20">
+      <div class="wrap">
+        <div class="reveal max-w-2xl"><p class="eyebrow">Seni & Budaya</p><h2 class="h2">Budaya yang masih hidup, bukan sekadar tontonan.</h2></div>
+        <div id="budaya" class="mt-10 grid grid-cols-2 gap-4 md:grid-cols-6"></div>
+      </div>
+    </section>
+
+    <!-- AGENDA + AMBULAN -->
+    <section class="bg-sand-100 py-20">
+      <div class="wrap grid gap-10 lg:grid-cols-3">
+        <div class="lg:col-span-2">
+          <div class="flex items-end justify-between"><div class="reveal"><p class="eyebrow">Agenda</p><h2 class="h2">Kegiatan terdekat</h2></div><a href="agenda.html" class="btn-line">Semua</a></div>
+          <div id="agendaList" class="mt-8 space-y-4"></div>
+        </div>
+        <aside><p class="eyebrow">Layanan Warga</p><h2 class="h2 !text-2xl md:!text-3xl">Ambulans desa</h2><div id="ambulanList" class="mt-6 space-y-4"></div></aside>
+      </div>
+    </section>
+
+    <!-- PRODUK -->
+    <section class="py-20">
+      <div class="wrap">
+        <div class="flex flex-wrap items-end justify-between gap-4"><div class="reveal"><p class="eyebrow">Toko Desa</p><h2 class="h2">Karya & hasil bumi warga</h2><p class="lead">Setiap pembelian langsung menghidupi pengrajin, petani, dan nelayan desa.</p></div><a href="produk.html" class="btn-line">Belanja</a></div>
+        <div id="produkList" class="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4"></div>
+      </div>
+    </section>
+
+    <!-- TRANSPARANSI -->
+    <section class="bg-forest-900 py-20 text-white">
+      <div class="wrap grid items-center gap-10 lg:grid-cols-2">
+        <div class="reveal"><p class="eyebrow !text-gold-500">Transparansi</p><h2 class="h2 !text-white">Dana desa dilaporkan terbuka.</h2><p class="mt-4 max-w-lg text-white/70">Ringkasan pendapatan, belanja, dan progres kegiatan desa dapat dilihat siapa saja, kapan saja.</p><a href="transparansi.html" class="btn-gold mt-8">Lihat Laporan</a></div>
+        <div id="dana" class="reveal space-y-5 rounded-3xl bg-white/5 p-7"></div>
+      </div>
+    </section>
+
+    <!-- BERITA -->
+    <section class="py-20">
+      <div class="wrap">
+        <div class="flex items-end justify-between"><div class="reveal"><p class="eyebrow">Berita</p><h2 class="h2">Kabar dari desa</h2></div><a href="berita.html" class="btn-line">Semua</a></div>
+        <div id="beritaList" class="mt-10 grid gap-6 md:grid-cols-3"></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="relative overflow-hidden bg-forest-800 py-24 text-center text-white">
+      <img src="src/assets/img/pasar_tradisional.jpg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-25" onerror="this.remove()" />
+      <div class="wrap relative"><h2 class="font-display text-4xl font-semibold md:text-5xl">Rencanakan kunjungan Anda</h2><p class="mx-auto mt-4 max-w-xl text-white/80">Pesan paket wisata atau tanyakan jadwal pentas langsung lewat WhatsApp.</p>
+        <a id="waCta" href="#" target="_blank" class="btn-gold mt-8">Hubungi via WhatsApp</a></div>
     </section>
   </main>
 
   <div id="footer"></div>
-  <script src="js/data.js"></script>
-  <script src="js/layout.js"></script>
+  <script src="js/data.js"></script><script src="js/layout.js"></script>
   <script>
-    renderLayout("index.html");
-    const today = new Date().toISOString().slice(0, 10);
-    const stat = (v, l, e) => `<div class="card text-center"><div class="text-3xl">${e}</div><div class="text-2xl font-extrabold text-brand-700">${v}</div><div class="text-xs text-slate-500">${l}</div></div>`;
-    document.getElementById("stats").innerHTML =
-      stat(DESA.penduduk.toLocaleString("id-ID"), "Penduduk", "👥") + stat(DESA.kk.toLocaleString("id-ID"), "Kepala Keluarga", "🏠") +
-      stat(DESA.rt, "RT", "📍") + stat(DESA.wisatawan.toLocaleString("id-ID"), "Wisatawan / tahun", "🧳");
-    document.getElementById("agendaList").innerHTML = AGENDA.filter(a => a.tgl >= today).slice(0, 4).map(eventCard).join("");
-    document.getElementById("beritaList").innerHTML = BERITA.slice(0, 4).map(newsCard).join("");
-    document.getElementById("ambulanList").innerHTML = AMBULAN.map(ambulanCard).join("");
-    document.getElementById("produkList").innerHTML = PRODUK.slice(0, 4).map(p => productCard(p, false)).join("");
-    const tp = DANA.pendapatan.reduce((s, x) => s + x.nilai, 0);
-    const ta = DANA.belanja.reduce((s, x) => s + x.anggaran, 0);
-    const tr = DANA.belanja.reduce((s, x) => s + x.realisasi, 0);
-    document.querySelector("h2.h-section:not(:empty)"); // no-op
-    document.querySelectorAll("h2").forEach(h => h.innerHTML = h.innerHTML.replace("{{tahun}}", DANA.tahun));
-    document.getElementById("ringkasDana").innerHTML = `Pendapatan desa <b>${rupiah(tp)}</b>, anggaran belanja <b>${rupiah(ta)}</b>, terealisasi <b>${rupiah(tr)}</b> (${Math.round(tr / ta * 100)}%).`;
+    renderLayout("index.html", true);
+    const zoomImg = (f, a) => pic(f, a, "h-full w-full object-cover", true);
+    document.querySelectorAll("main div").forEach(d => { d.innerHTML = d.innerHTML.replace("__IMG1__", zoomImg("rumah_adat.jpg", "Rumah adat")).replace("__IMG2__", zoomImg("pura.jpg", "Pura")); });
+
+    // Info cepat
+    const nextEv = AGENDA.filter(a => a.tgl >= today())[0];
+    const tersedia = AMBULAN.filter(a => a.status === "Tersedia").length;
+    const q = (e, t, v, s) => `<div class="flex items-center gap-4 bg-white p-6"><span class="text-3xl">${e}</span><div><p class="text-[11px] font-semibold uppercase tracking-widest text-gold-600">${t}</p><p class="font-semibold text-forest-900">${v}</p><p class="text-xs text-forest-900/60">${s}</p></div></div>`;
+    $("quick").innerHTML =
+      q("📅", "Agenda berikutnya", nextEv ? nextEv.judul : "Belum ada", nextEv ? tgl(nextEv.tgl) : "") +
+      q("🚑", "Ambulans desa", `${tersedia} dari ${AMBULAN.length} unit tersedia`, "Layanan gratis untuk warga") +
+      q("🎟️", "Tiket wisata", "Mulai Rp 25.000", "Buka setiap hari 08.00 – 18.00");
+
+    $("stats").innerHTML = [[DESA.penduduk.toLocaleString("id-ID"), "Penduduk"], [DESA.banjar, "Banjar"], [DESA.subak, "Subak"], [DESA.wisatawan.toLocaleString("id-ID"), "Wisatawan/tahun"]]
+      .map(([n, l]) => `<div><p class="font-display text-3xl font-semibold text-forest-800">${n}</p><p class="text-xs uppercase tracking-widest text-forest-900/50">${l}</p></div>`).join("");
+
+    const B = [["monyet.jpg", "Hutan Monyet Alas Wana", "Alam", "col-span-2 row-span-2"], ["sawah3.jpg", "Sawah Subak", "Alam", ""], ["pura.jpg", "Pura Luhur", "Budaya", ""], ["tambak.jpg", "Tambak & Nelayan", "Bahari", "col-span-2"], ["taman.jpg", "Taman Desa", "Keluarga", ""], ["pasar_tradisional.jpg", "Pasar Tradisional", "Keluarga", ""]];
+    $("bento").innerHTML = B.map(([f, t, k, c]) => `<a href="wisata.html" class="reveal group relative overflow-hidden rounded-2xl ${c}">${pic(f, t, "absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110")}<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent"></div><div class="absolute bottom-0 p-5 text-white"><span class="text-[11px] uppercase tracking-widest text-gold-500">${k}</span><p class="font-display text-lg font-semibold md:text-xl">${t}</p></div></a>`).join("");
+
+    const sp = ["md:col-span-3", "md:col-span-3", "md:col-span-2", "md:col-span-2", "md:col-span-2", "md:col-span-6"];
+    $("budaya").innerHTML = BUDAYA.slice(0, 5).map((b, i) => `<div class="reveal group relative h-56 overflow-hidden rounded-2xl ${sp[i]}">${pic(b.img, b.t, "absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110", true)}<div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent"></div><div class="pointer-events-none absolute bottom-0 p-4 text-white"><p class="font-display text-lg font-semibold">${b.t}</p><p class="text-xs text-white/75">${b.d}</p></div></div>`).join("");
+
+    $("agendaList").innerHTML = AGENDA.filter(a => a.tgl >= today()).slice(0, 4).map(eventRow).join("");
+    $("ambulanList").innerHTML = AMBULAN.map(ambulanCard).join("");
+    $("produkList").innerHTML = PRODUK.slice(0, 4).map(p => productCard(p, false)).join("");
+    $("beritaList").innerHTML = BERITA.slice(0, 3).map(newsCard).join("");
+
+    const tp = DANA.pendapatan.reduce((s, x) => s + x.nilai, 0), ta = DANA.belanja.reduce((s, x) => s + x.anggaran, 0), tr = DANA.belanja.reduce((s, x) => s + x.realisasi, 0);
+    const row = (l, v, p) => `<div><div class="flex justify-between text-sm"><span>${l}</span><b class="text-gold-500">${v}</b></div>${p != null ? `<div class="mt-2 h-2 rounded-full bg-white/10"><div class="h-full rounded-full bg-gold-500" style="width:${p}%"></div></div>` : ""}</div>`;
+    $("dana").innerHTML = row("Total pendapatan " + DANA.tahun, rupiah(tp)) + row("Anggaran belanja", rupiah(ta)) + row(`Terealisasi (${Math.round(tr / ta * 100)}%)`, rupiah(tr), Math.round(tr / ta * 100));
+    $("waCta").href = `https://wa.me/${DESA.wa}?text=${encodeURIComponent("Halo, saya ingin bertanya tentang paket wisata Desa Taman Sari.")}`;
+    reveal();
   </script>
 </body>
 </html>

@@ -2,39 +2,35 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Layanan – Desa Tirtomulyo</title>
+  <title>Layanan – Desa Wisata Taman Sari</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="dist/output.css" />
 </head>
-<body class="bg-slate-50 font-sans text-slate-800">
-  <div id="nav"></div>
-  <main class="container-desa space-y-12 py-10">
-    <section>
-      <h1 class="h-section">Layanan Ambulans Desa</h1>
-      <p class="text-sm text-slate-500">Gratis untuk warga. Status diperbarui oleh petugas desa.</p>
-      <div id="ambulan" class="mt-5 grid gap-4 md:grid-cols-2"></div>
-    </section>
-
-    <section>
-      <h2 class="text-xl font-bold text-brand-900">Kontak Darurat</h2>
-      <div id="kontak" class="mt-4 grid gap-3 sm:grid-cols-2"></div>
-    </section>
-
-    <section class="card bg-brand-50">
-      <h2 class="text-xl font-bold text-brand-900">Info untuk Pengunjung</h2>
-      <ul class="mt-2 list-inside list-disc space-y-1 text-sm text-slate-600">
-        <li>Parkir tersedia di Lapangan Desa dan area Embung.</li>
-        <li>Pemandu wisata lokal dapat dipesan lewat halaman Produk Desa.</li>
-        <li>Pantau halaman Agenda untuk acara terbuka bagi umum.</li>
-      </ul>
+<body>
+  <div id="nav"></div><div id="hero"></div>
+  <main class="wrap space-y-20 py-16">
+    <section><p class="eyebrow">Darurat</p><h2 class="h2">Ambulans desa</h2><p class="lead">Gratis untuk warga. Status diperbarui petugas desa.</p><div id="ambulan" class="mt-8 grid gap-5 md:grid-cols-2"></div>
+      <ol class="mt-8 grid gap-4 text-sm md:grid-cols-3">
+        <li class="card p-5"><b class="text-gold-600">1.</b> Hubungi sopir ambulans yang berstatus <i>Tersedia</i>.</li>
+        <li class="card p-5"><b class="text-gold-600">2.</b> Sebutkan nama, lokasi (banjar), dan kondisi pasien.</li>
+        <li class="card p-5"><b class="text-gold-600">3.</b> Siapkan KTP/KK dan kartu BPJS bila ada.</li></ol></section>
+    <section><p class="eyebrow">Kontak</p><h2 class="h2">Nomor penting</h2><div id="kontak" class="mt-8 grid gap-4 sm:grid-cols-2"></div></section>
+    <section class="grid gap-10 lg:grid-cols-2">
+      <div><p class="eyebrow">Administrasi</p><h2 class="h2">Layanan surat desa</h2><div id="admin" class="mt-8 space-y-3"></div></div>
+      <div class="card h-fit bg-sand-100 p-8"><h2 class="font-display text-2xl font-semibold text-forest-900">Info untuk pengunjung</h2>
+        <ul class="mt-4 list-inside list-disc space-y-2 text-sm"><li>Parkir tersedia di Lapangan Desa dan area Hutan Monyet.</li><li>Pemandu lokal dapat dipesan lewat halaman Wisata.</li><li>Pinjam kamen dan selendang di loket pura.</li><li>Pantau halaman Agenda untuk pentas dan upacara.</li></ul></div>
     </section>
   </main>
   <div id="footer"></div>
   <script src="js/data.js"></script><script src="js/layout.js"></script>
   <script>
-    renderLayout("layanan.html");
-    document.getElementById("ambulan").innerHTML = AMBULAN.map(ambulanCard).join("");
-    document.getElementById("kontak").innerHTML = KONTAK.map(k =>
-      `<a href="tel:${k.hp}" class="card flex items-center justify-between"><span class="font-semibold">${k.nama}</span><span class="text-brand-700">📞 ${k.hp}</span></a>`).join("");
+    renderLayout("layanan.html", false);
+    pageHero("Layanan Desa", "Ambulans, kontak darurat, dan layanan administrasi untuk warga serta pengunjung.", "taman_bermain.jpg");
+    $("ambulan").innerHTML = AMBULAN.map(ambulanCard).join("");
+    $("kontak").innerHTML = KONTAK.map(([n, h]) => `<a href="tel:${h}" class="card reveal flex items-center justify-between p-5"><span class="font-semibold text-forest-900">${n}</span><span class="text-gold-600">📞 ${h}</span></a>`).join("");
+    $("admin").innerHTML = ADMIN.map(([n, w]) => `<div class="card reveal flex items-center justify-between p-5"><span class="font-semibold text-forest-900">📄 ${n}</span><span class="badge">${w}</span></div>`).join("");
+    reveal();
   </script>
 </body>
 </html>

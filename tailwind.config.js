@@ -4,10 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: { 50: "#f0fdf4", 100: "#dcfce7",500: "#22a35a", 600: "#16834a", 700: "#126a3d", 900: "#0b3b24" },
-        earth: { 100: "#fef3c7", 500: "#d97706" },
+        forest: { 500: "#3f8a5f", 600: "#2f6b4a", 700: "#25523a", 800: "#1c3b2a", 900: "#12261b" },
+        sand: { 50: "#faf7f0", 100: "#f3ecdc", 200: "#e7dbc0" },
+        gold: { 500: "#c39a3d", 600: "#9a7022" },
       },
-      fontFamily: { sans: ["Inter", "system-ui", "sans-serif"] },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Playfair Display", "Georgia", "serif"],
+      },
     },
   },
   plugins: [],

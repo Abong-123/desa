@@ -2,31 +2,35 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Berita – Desa Tirtomulyo</title>
+  <title>Berita – Desa Wisata Taman Sari</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="dist/output.css" />
 </head>
-<body class="bg-slate-50 font-sans text-slate-800">
-  <div id="nav"></div>
-  <main class="container-desa py-10">
-    <h1 class="h-section">Berita Desa</h1>
-    <p class="text-sm text-slate-500">Kabar terbaru dari Tirtomulyo.</p>
-    <div id="filter" class="mt-5 flex flex-wrap gap-2"></div>
-    <div id="list" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+<body>
+  <div id="nav"></div><div id="hero"></div>
+  <main class="wrap py-16">
+    <div class="flex flex-wrap items-center gap-3"><div id="filter" class="flex flex-1 flex-wrap gap-2"></div><input id="cari" placeholder="Cari berita…" class="field !w-full sm:!w-64" /></div>
+    <div id="utama" class="mt-10"></div>
+    <div id="list" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
   </main>
   <div id="footer"></div>
   <script src="js/data.js"></script><script src="js/layout.js"></script>
   <script>
-    renderLayout("berita.html");
-    const kats = ["Semua", ...new Set(BERITA.map(b => b.kat))];
-    let aktif = "Semua";
+    renderLayout("berita.html", false);
+    pageHero("Berita Desa", "Kabar terbaru dari sawah, pura, pasar, dan pesisir Taman Sari.", "sawah2.jpg");
+    const kats = ["Semua", ...new Set(BERITA.map(b => b.kat))]; let aktif = "Semua";
     function draw() {
-      document.getElementById("filter").innerHTML = kats.map(k =>
-        `<button data-k="${k}" class="rounded-full px-4 py-1.5 text-sm font-medium ${k === aktif ? "bg-brand-600 text-white" : "bg-white text-slate-600 border border-slate-200"}">${k}</button>`).join("");
-      document.getElementById("list").innerHTML = BERITA.filter(b => aktif === "Semua" || b.kat === aktif)
-        .sort((a, b) => b.tgl.localeCompare(a.tgl)).map(newsCard).join("");
-      document.querySelectorAll("[data-k]").forEach(btn => btn.onclick = () => { aktif = btn.dataset.k; draw(); });
+      $("filter").innerHTML = kats.map(k => `<button data-k="${k}" class="chipbtn ${k === aktif ? "on" : ""}">${k}</button>`).join("");
+      const q = $("cari").value.toLowerCase();
+      const data = BERITA.filter(b => (aktif === "Semua" || b.kat === aktif) && (b.j + b.isi).toLowerCase().includes(q)).sort((a, b) => b.tgl.localeCompare(a.tgl));
+      const [f, ...rest] = data;
+      $("utama").innerHTML = f ? `<article class="card reveal grid md:grid-cols-2"><div class="h-72 md:h-auto">${pic(f.img, f.j, "h-full w-full object-cover")}</div><div class="flex flex-col justify-center p-8"><span class="badge self-start">${f.kat}</span><h2 class="mt-3 font-display text-3xl font-semibold text-forest-900">${f.j}</h2><p class="mt-2 text-xs text-forest-900/50">${tgl(f.tgl)}</p><p class="mt-4 leading-relaxed">${f.isi}</p></div></article>` : `<p>Berita tidak ditemukan.</p>`;
+      $("list").innerHTML = rest.map(newsCard).join("");
+      document.querySelectorAll("[data-k]").forEach(b => b.onclick = () => { aktif = b.dataset.k; draw(); });
+      reveal();
     }
-    draw();
+    $("cari").oninput = draw; draw();
   </script>
 </body>
 </html>

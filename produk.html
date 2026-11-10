@@ -2,69 +2,57 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Produk Desa – Desa Tirtomulyo</title>
+  <title>Produk Desa – Desa Wisata Taman Sari</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="dist/output.css" />
 </head>
-<body class="bg-slate-50 font-sans text-slate-800">
-  <div id="nav"></div>
-  <main class="container-desa grid gap-8 py-10 lg:grid-cols-3">
-    <section class="lg:col-span-2">
-      <h1 class="h-section">Produk Desa</h1>
-      <p class="text-sm text-slate-500">Beli langsung dari warga dan BUMDes. Hasil penjualan menggerakkan ekonomi desa.</p>
-      <div class="mt-5 flex flex-wrap gap-2">
-        <input id="cari" placeholder="Cari produk…" class="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm sm:w-64" />
-        <select id="kat" class="rounded-xl border border-slate-200 px-3 py-2 text-sm"></select>
-      </div>
-      <div id="list" class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3"></div>
+<body>
+  <div id="nav"></div><div id="hero"></div>
+  <main class="wrap grid gap-10 py-16 lg:grid-cols-4">
+    <section class="lg:col-span-3">
+      <div class="flex flex-wrap gap-3"><input id="cari" placeholder="Cari produk…" class="field !w-full sm:!w-64" /><select id="kat" class="field !w-auto"></select></div>
+      <div id="list" class="mt-8 grid grid-cols-2 gap-5 md:grid-cols-3"></div>
     </section>
-
-    <aside class="card h-fit lg:sticky lg:top-24">
-      <h2 class="text-lg font-bold text-brand-900">🛒 Keranjang</h2>
-      <div id="cart" class="mt-3 space-y-3 text-sm"></div>
-      <div class="mt-4 flex justify-between border-t pt-3 font-bold"><span>Total</span><span id="total">Rp 0</span></div>
-      <input id="nama" placeholder="Nama pemesan" class="mt-3 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" />
+    <aside class="card h-fit p-6 lg:sticky lg:top-24">
+      <h2 class="font-display text-xl font-semibold text-forest-900">🛒 Keranjang</h2>
+      <div id="cart" class="mt-4 space-y-3 text-sm"></div>
+      <div class="mt-4 flex justify-between border-t border-sand-200 pt-3 font-bold"><span>Total</span><span id="total">Rp 0</span></div>
+      <input id="nama" placeholder="Nama pemesan" class="field mt-3" />
       <button id="checkout" class="btn mt-3 w-full">Pesan via WhatsApp</button>
+      <p class="mt-3 text-xs text-forest-900/50">Pembayaran dan pengiriman dikonfirmasi admin lewat WhatsApp.</p>
     </aside>
   </main>
   <div id="footer"></div>
   <script src="js/data.js"></script><script src="js/layout.js"></script>
   <script>
-    renderLayout("produk.html");
-    let cart = {};
-    try { cart = JSON.parse(localStorage.getItem("cart") || "{}"); } catch (e) {}
-    const save = () => { try { localStorage.setItem("cart", JSON.stringify(cart)); } catch (e) {} };
-
-    const kat = document.getElementById("kat");
-    kat.innerHTML = ["Semua", ...new Set(PRODUK.map(p => p.kat))].map(k => `<option>${k}</option>`).join("");
+    renderLayout("produk.html", false);
+    pageHero("Produk Desa", "Karya pengrajin, hasil sawah, dan tangkapan nelayan. Beli langsung dari warga Taman Sari.", "tenun.jpg");
+    let cart = {}; try { cart = JSON.parse(localStorage.getItem("cart-bali") || "{}"); } catch (e) {}
+    const save = () => { try { localStorage.setItem("cart-bali", JSON.stringify(cart)); } catch (e) {} };
+    const kat = $("kat"); kat.innerHTML = ["Semua", ...new Set(PRODUK.map(p => p.kat))].map(k => `<option>${k}</option>`).join("");
+    const find = (id) => PRODUK.find(x => x.id == id);
 
     function drawList() {
-      const q = document.getElementById("cari").value.toLowerCase();
-      document.getElementById("list").innerHTML = PRODUK
-        .filter(p => (kat.value === "Semua" || p.kat === kat.value) && p.nama.toLowerCase().includes(q))
-        .map(p => productCard(p)).join("") || `<p class="col-span-full text-slate-500">Produk tidak ditemukan.</p>`;
+      const q = $("cari").value.toLowerCase();
+      $("list").innerHTML = PRODUK.filter(p => (kat.value === "Semua" || p.kat === kat.value) && p.nama.toLowerCase().includes(q)).map(p => productCard(p)).join("") || `<p class="col-span-full">Produk tidak ditemukan.</p>`;
       document.querySelectorAll("[data-add]").forEach(b => b.onclick = () => { const id = b.dataset.add; cart[id] = (cart[id] || 0) + 1; save(); drawCart(); });
+      reveal();
     }
     function drawCart() {
       const ids = Object.keys(cart);
-      document.getElementById("cart").innerHTML = ids.length ? ids.map(id => {
-        const p = PRODUK.find(x => x.id == id);
-        return `<div class="flex items-center justify-between gap-2"><span>${p.emoji} ${p.nama}<br><span class="text-xs text-slate-500">${rupiah(p.harga)}</span></span>
-          <span class="flex items-center gap-1"><button data-min="${id}" class="h-7 w-7 rounded-lg bg-slate-100">−</button><b>${cart[id]}</b><button data-plus="${id}" class="h-7 w-7 rounded-lg bg-slate-100">+</button></span></div>`;
-      }).join("") : `<p class="text-slate-500">Keranjang kosong.</p>`;
-      document.getElementById("total").textContent = rupiah(ids.reduce((s, id) => s + PRODUK.find(x => x.id == id).harga * cart[id], 0));
+      $("cart").innerHTML = ids.length ? ids.map(id => { const p = find(id); return `<div class="flex items-center justify-between gap-2"><span>${p.nama}<br><span class="text-xs text-forest-900/50">${rupiah(p.harga)}</span></span><span class="flex items-center gap-1"><button data-min="${id}" class="h-7 w-7 rounded-lg bg-sand-100">−</button><b>${cart[id]}</b><button data-plus="${id}" class="h-7 w-7 rounded-lg bg-sand-100">+</button></span></div>`; }).join("") : `<p class="text-forest-900/50">Keranjang kosong.</p>`;
+      $("total").textContent = rupiah(ids.reduce((s, id) => s + find(id).harga * cart[id], 0));
       document.querySelectorAll("[data-plus]").forEach(b => b.onclick = () => { cart[b.dataset.plus]++; save(); drawCart(); });
       document.querySelectorAll("[data-min]").forEach(b => b.onclick = () => { if (--cart[b.dataset.min] <= 0) delete cart[b.dataset.min]; save(); drawCart(); });
     }
-    document.getElementById("cari").oninput = drawList;
-    kat.onchange = drawList;
-    document.getElementById("checkout").onclick = () => {
-      const ids = Object.keys(cart);
-      if (!ids.length) return alert("Keranjang masih kosong.");
-      const nama = document.getElementById("nama").value.trim() || "Pembeli";
-      const baris = ids.map(id => { const p = PRODUK.find(x => x.id == id); return `- ${p.nama} x${cart[id]} = ${rupiah(p.harga * cart[id])}`; });
-      const total = ids.reduce((s, id) => s + PRODUK.find(x => x.id == id).harga * cart[id], 0);
-      const pesan = `Halo admin ${DESA.nama}, saya ${nama} ingin memesan:\n${baris.join("\n")}\nTotal: ${rupiah(total)}`;
-      window.open(`https://wa.me/${DESA.wa}?text=${encodeURIComponent(pesan)}`, "_blank");
+    $("cari").oninput = drawList; kat.onchange = drawList;
+    $("checkout").onclick = () => {
+      const ids = Object.keys(cart); if (!ids.length) return alert("Keranjang masih kosong.");
+      const total = ids.reduce((s, id) => s + find(id).harga * cart[id], 0);
+      const baris = ids.map(id => `- ${find(id).nama} x${cart[id]} = ${rupiah(find(id).harga * cart[id])}`).join("\n");
+      const msg = `Halo admin ${DESA.nama}, saya ${$("nama").value.trim() || "pembeli"} ingin memesan:\n${baris}\nTotal: ${rupiah(total)}`;
+      window.open(`https://wa.me/${DESA.wa}?text=${encodeURIComponent(msg)}`, "_blank");
     };
     drawList(); drawCart();
   </script>
